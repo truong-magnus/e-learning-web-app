@@ -1,0 +1,13 @@
+server:
+  port: 8081 # Standard port for User Service in our architecture
+
+spring:
+  application:
+    name: user-service # The exact name that will appear on the Eureka dashboard
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # The address of our Discovery Server
+  instance:
+    prefer-ip-address: true # Best practice: Register using IP address, crucial for Docker later
