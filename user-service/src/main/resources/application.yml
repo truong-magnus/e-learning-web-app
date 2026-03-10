@@ -11,3 +11,10 @@ eureka:
       defaultZone: http://localhost:8761/eureka/ # The address of our Discovery Server
   instance:
     prefer-ip-address: true # Best practice: Register using IP address, crucial for Docker later
+    resilience4j:
+      circuitbreaker:
+        instances:
+          courseService:
+            sliding-window-size: 5
+            failure-rate-threshold: 50
+            wait-duration-in-open-state: 5s
