@@ -1,20 +1,26 @@
 server:
-  port: 8081 # Standard port for User Service in our architecture
+  port: 8081
 
 spring:
   application:
-    name: user-service # The exact name that will appear on the Eureka dashboard
+    name: user-service
 
+  # Database connection configuration
+  datasource:
+    # MAGIC TRICK: Added createDatabaseIfNotExist=true so Spring Boot creates the database automatically
+    url: jdbc:mysql://localhost:3306/elearning_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA / Hibernate configuration
+  jpa:
+    hibernate:
+      ddl-auto: update # Automatically create or update database tables based on Entities
+    show-sql: true # Print SQL queries to the console for debugging
+
+# Eureka Discovery Client configuration
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/ # The address of our Discovery Server
-  instance:
-    prefer-ip-address: true # Best practice: Register using IP address, crucial for Docker later
-    resilience4j:
-      circuitbreaker:
-        instances:
-          courseService:
-            sliding-window-size: 5
-            failure-rate-threshold: 50
-            wait-duration-in-open-state: 5s
+      defaultZone: http://localhost:8761/eureka/ # Point to the Eureka Server

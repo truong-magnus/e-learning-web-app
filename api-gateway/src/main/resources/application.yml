@@ -6,25 +6,29 @@ spring:
     name: api-gateway
   cloud:
     gateway:
-      # REQUIRED STRUCTURE FOR SPRING BOOT 4.X / SPRING CLOUD 5.X
       server:
         webflux:
           routes:
             # ---------------------------------------------------
-            # 1. ROUTE FOR USER SERVICE
+            # 1. ROUTE FOR AUTHENTICATION (PUBLIC - NO FILTER)
             # ---------------------------------------------------
-            - id: user-service
-              # Load balance traffic to instances registered in Eureka
+            - id: auth-route
               uri: lb://USER-SERVICE
               predicates:
-                # Match any request starting with /api/users/
+                - Path=/api/auth/**
+
+            # ---------------------------------------------------
+            # 2. ROUTE FOR USER SERVICE (SECURED)
+            # ---------------------------------------------------
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
                 - Path=/api/users/**
               filters:
-                # Apply the AuthenticationGatewayFilterFactory to secure this route
                 - Authentication
 
             # ---------------------------------------------------
-            # 2. ROUTE FOR COURSE SERVICE
+            # 3. ROUTE FOR COURSE SERVICE (SECURED)
             # ---------------------------------------------------
             - id: course-service
               uri: lb://COURSE-SERVICE
