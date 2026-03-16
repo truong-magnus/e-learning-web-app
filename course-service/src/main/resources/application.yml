@@ -5,12 +5,14 @@ spring:
   application:
     name: course-service
   datasource:
-    url: jdbc:mysql://localhost:3306/course_db?useSSL=false&serverTimezone=UTC
+    # MAGIC TRICK: Auto-create the database if it does not exist
+    url: jdbc:mysql://localhost:3306/course_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
+      # IRON FIST: Force Hibernate to drop existing tables and create new ones based on Entities
       ddl-auto: update
     show-sql: true
 

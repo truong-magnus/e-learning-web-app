@@ -1,6 +1,7 @@
 package com.elearning.courseservice.controller;
 
-import com.elearning.courseservice.model.Course;
+import com.elearning.courseservice.dto.CourseRequest;
+import com.elearning.courseservice.dto.CourseResponse;
 import com.elearning.courseservice.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,13 +18,13 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Course createCourse(@RequestBody Course course) {
-        return courseService.createCourse(course);
+    public CourseResponse createCourse(@RequestBody CourseRequest courseRequest) {
+        return courseService.createCourse(courseRequest);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Course> getAllCourses() {
+    public List<CourseResponse> getAllCourses() {
         return courseService.getAllCourses();
     }
 }
