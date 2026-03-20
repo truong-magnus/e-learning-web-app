@@ -12,7 +12,10 @@ public class CourseResponse {
     private String title;
     private String description;
     private double price;
-    private Long instructorId;
+
+    // Changed from instructorId to instructorName to show real data
+    private String instructorName;
+
     private String status;
-    private String categoryName; // Only return the category name, not the whole Category object
+    private String categoryName;
 }
